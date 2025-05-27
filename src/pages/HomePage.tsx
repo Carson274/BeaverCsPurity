@@ -16,7 +16,7 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
     "Attended a hackathon outside of Oregon",
     "Won a hackathon",
     "Attended a computer science club meeting",
-    "Attended an ACM club meeting (shameless plug)",
+    "Attended an <a href='https://acm.oregonstate.edu' target='_blank' rel='noopener noreferrer' class='text-link'>ACM</a> club meeting (shameless plug)",
     "'sudo rm -rf'd something you weren't supposed to",
     "500+ connections on LinkedIn",
     "Cried over an assignment",

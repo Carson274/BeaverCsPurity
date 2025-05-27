@@ -81,6 +81,22 @@
 .checkbox {
   accent-color: #D73F09;
 }
+
+.text-link {
+  color: #D73F09;
+  text-decoration: none;
+  font-weight: inherit;
+  transition: color 0.2s ease;
+}
+
+.text-link:hover {
+  color: #E55A2B;
+  text-decoration: none;
+}
+
+.text-link:visited {
+  color: #CC5529;
+}
 /* ----------------------- */
 
 /* Checkbox.tsx-exclusive */

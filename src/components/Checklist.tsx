@@ -21,9 +21,12 @@ export default function Checklist({ checklist, setChecklist }: {
             checkedState={item.isChecked} 
             onChange={(isChecked) => handleCheckboxChange(item.id, isChecked)}
           />
-          <p className='text'>
-            {item.id + 1}. {item.text}
-          </p>
+          <p 
+            className='text'
+            dangerouslySetInnerHTML={{ 
+              __html: `${item.id + 1}. ${item.text}` 
+            }}
+          />
         </div>
       ))}
     </div>
