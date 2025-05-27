@@ -3,7 +3,7 @@ import type { MessageItem } from '../types'
 
 export default function ResultsPage({ score }: { score: number }) {
   const messages: MessageItem[] = [
-    { range: "90-100", text: "You must either be a freshman or have a social life. Congrats! Goodluck finding a j*b." },
+    { range: "90-100", text: "You must either be a freshman or have a social life. Congrats! Goodluck finding a j*b though." },
     { range: "80-89", text: "" },
     { range: "70-79", text: "" },
     { range: "60-69", text: "" },
