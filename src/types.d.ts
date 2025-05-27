@@ -3,3 +3,8 @@ export interface ChecklistItem {
   text: string;
   isChecked: boolean;
 }
+
+export interface MessageItem {
+  range: string;
+  text: string;
+}
