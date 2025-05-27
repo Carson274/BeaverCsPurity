@@ -1,3 +1,4 @@
+import Footer from '../components/Footer'
 import type { MessageItem } from '../types'
 
 export default function ResultsPage({ score }: { score: number }) {
@@ -32,6 +33,8 @@ export default function ResultsPage({ score }: { score: number }) {
           </button>
         </a>
       </div>
+
+      <Footer/>
     </div>
   )
 }
