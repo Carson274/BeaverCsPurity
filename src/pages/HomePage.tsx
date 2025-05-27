@@ -44,6 +44,8 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
     "Caused a fork bomb on the OS1 server",
     "Caused a fork bomb on the flip server (uh oh)",
     "Considered switching majors",
+    "Sat in the front row of a class",
+    "Used Jake's Resume template (or Peter's <a href='https://formacv.org/' target='_blank' rel='noopener noreferrer' class='text-link'>resume builder</a>)",
   ]
 
   const [checklist, setChecklist] = useState<ChecklistItem[]>(
