@@ -1,8 +1,26 @@
-import React from 'react'
+import { useState } from 'react';
 import Checklist from '../components/Checklist'
 import Footer from '../components/Footer'
+import type { ChecklistItem } from '../types';
 
-export default function HomePage() {
+export default function HomePage({ score, setScore } : { score: number; setScore: (score: number) => void }) {
+  const items = [
+    "Spent money on an LLM.",
+    "Used ChatGPT on an assignment.",
+    "Failed a test.",
+    "Failed a course.",
+    "Took 20+ credits in one term.",
+    "Survived CS 162."
+  ]
+
+  const [checklist, setChecklist] = useState<ChecklistItem[]>(
+    items.map(item => ({
+      id: items.indexOf(item),
+      text: item,
+      isChecked: false
+    }))
+  );
+
   return (
     <div className='home-div'>
       <h1 className='text h1-text orange-text title-text'>Oregon State Purity Test</h1>
@@ -13,12 +31,22 @@ export default function HomePage() {
         <p className='text p-text bold-text'>Caution: This is NOT a bucket list. Completion of all items on this test will make you a critter.</p>
       </div>
 
-      <Checklist />
+      <Checklist checklist={checklist} setChecklist={setChecklist}/>
 
       <div className='calculate-button-div'>
-        <button className='calculate-button'>
+        <button 
+          className='calculate-button'
+          onClick={() => {
+            const score = checklist.filter(item => item.isChecked).length;
+            setScore(100 - score);
+          }}
+        >
           Calculate my score.
         </button>
+      </div>
+
+      <div className='score-div'>
+        <p className='text p-text'>Current score: {score}</p>
       </div>
 
       <Footer />

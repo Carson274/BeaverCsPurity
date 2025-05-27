@@ -61,6 +61,14 @@
   font-size: 18px;
   margin-bottom: 2rem;
 }
+
+.score-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
 /* ------------------ */
 
 /* Checklist.tsx-exclusive */

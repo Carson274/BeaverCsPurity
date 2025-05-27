@@ -1,35 +1,26 @@
-import React, { useState } from 'react'
 import Checkbox from '../components/Checkbox';
+import type { ChecklistItem } from '../types';
 
-interface ChecklistItem {
-  id: number;
-  text: string;
-  isChecked: boolean;
-}
+export default function Checklist({ checklist, setChecklist }: {
+    checklist: ChecklistItem[];
+    setChecklist: (updatedChecklist: ChecklistItem[]) => void;
+  }) {
 
-export default function Checklist() {
-  const items = [
-    "Spent money on an LLM.",
-    "Used ChatGPT on an assignment.",
-    "Failed a test.",
-    "Failed a course.",
-    "Took 20+ credits in one term.",
-    "Survived CS 162."
-  ]
-
-  const [checklist, setChecklist] = useState<ChecklistItem[]>(
-    items.map(item => ({
-      id: items.indexOf(item),
-      text: item,
-      isChecked: false
-    }))
-  );
+  const handleCheckboxChange = (id: number, isChecked: boolean) => {
+    const updatedChecklist = checklist.map((item) =>
+      item.id === id ? { ...item, isChecked } : item
+    );
+    setChecklist(updatedChecklist);
+  };
 
   return (
     <div>
       {checklist.map((item) => (
         <div key={item.id} className='checklist-item'>
-          <Checkbox checkedState={item.isChecked} />
+          <Checkbox 
+            checkedState={item.isChecked} 
+            onChange={(isChecked) => handleCheckboxChange(item.id, isChecked)}
+          />
           <p className='text'>
             {item.id + 1}. {item.text}
           </p>

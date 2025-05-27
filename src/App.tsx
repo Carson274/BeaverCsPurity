@@ -3,11 +3,11 @@ import HomePage from './pages/HomePage'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [score, setScore] = useState(100)
 
   return (
     <div className='app-div'>
-      <HomePage />
+      <HomePage score={score} setScore={setScore}/>
     </div>
   )
 }
