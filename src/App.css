@@ -1,5 +1,4 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -10,6 +9,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
   height: 100vh;
 }
 
@@ -18,7 +18,7 @@
   flex-direction: column;
   justify-content: flex-start;
   text-align: left;
-  width: 85%;
+  max-width: 80rem;
   height: 100vh;
 }
 
@@ -136,9 +136,47 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 4rem;
+  margin-top: 2rem;
 }
 
 .footer-text {
   font-size: 14px;
+}
+/* -------------------- */
+
+/* ResultsPage.tsx-exclusive */
+.results-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+  max-width: 30rem;
+  height: 100vh;
+  padding: 2rem;
+}
+
+.score-title {
+  font-size: 24px;
+  margin-bottom: 0.5rem;
+}
+
+.score-text {
+  font-size: 40px;
+  margin-bottom: 1rem;
+}
+
+.try-again-button {
+  background-color: #D73F09;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.result-buttons-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
 }
