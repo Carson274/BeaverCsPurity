@@ -3,14 +3,20 @@ import Checklist from '../components/Checklist'
 import Footer from '../components/Footer'
 import type { ChecklistItem } from '../types';
 
-export default function HomePage({ score, setScore } : { score: number; setScore: (score: number) => void }) {
+export default function HomePage({ setScore } : { setScore: (score: number) => void }) {
   const items = [
-    "Spent money on an LLM.",
-    "Used ChatGPT on an assignment.",
-    "Failed a test.",
-    "Failed a course.",
-    "Took 20+ credits in one term.",
-    "Survived CS 162."
+    "Spent money on an LLM",
+    "Used ChatGPT on an assignment",
+    "Failed a test",
+    "Failed a course",
+    "Took 20+ credits in one term",
+    "Survived CS 162",
+    "Got denied an assignment deadline extension",
+    "Attended a hackathon",
+    "Won a hackathon",
+    "Attended a computer science club meeting",
+    "'sudo rm -rf'd something you weren't supposed to",
+    ""
   ]
 
   const [checklist, setChecklist] = useState<ChecklistItem[]>(
@@ -34,19 +40,17 @@ export default function HomePage({ score, setScore } : { score: number; setScore
       <Checklist checklist={checklist} setChecklist={setChecklist}/>
 
       <div className='calculate-button-div'>
-        <button 
-          className='calculate-button'
-          onClick={() => {
-            const score = checklist.filter(item => item.isChecked).length;
-            setScore(100 - score);
-          }}
-        >
-          Calculate my score.
-        </button>
-      </div>
-
-      <div className='score-div'>
-        <p className='text p-text'>Current score: {score}</p>
+        <a href='/results'>
+          <button 
+            className='calculate-button'
+            onClick={() => {
+              const score = checklist.filter(item => item.isChecked).length;
+              setScore(100 - score);
+            }}
+          >
+            Calculate my score.
+          </button>
+        </a>
       </div>
 
       <Footer />
