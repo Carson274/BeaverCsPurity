@@ -64,7 +64,7 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
     "Mock interviewed someone",
     "Owned an RGB keyboard",
     "Used a personal mouse in class",
-    "Attended a party",
+    "Never attended a party",
   ]
 
   const [checklist, setChecklist] = useState<ChecklistItem[]>(

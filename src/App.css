@@ -1,6 +1,5 @@
 #root {
-  margin: 0 auto;
-  padding: 2rem;
+  margin: 0;
   text-align: center;
 }
 
@@ -9,8 +8,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
   height: 100vh;
+  padding: 2rem;
 }
 
 .home-div {
@@ -196,4 +195,15 @@
   display: flex;
   justify-content: center;
   margin-top: 2rem;
+}
+
+/* NotFoundPage.tsx-exclusive */
+.back-button {
+  background-color: #D73F09;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
 }
