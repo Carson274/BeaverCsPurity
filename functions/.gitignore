@@ -1,0 +1,10 @@
+# Python bytecode
+__pycache__/
+
+# Python virtual environment
+venv/
+*.local
+
+# Node modules (auto-installed by Firebase on deploy)
+node_modules/
+lib/

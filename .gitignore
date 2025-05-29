@@ -22,3 +22,20 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Firebase settings
+.firebaserc
+.firebase/
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# React build
+build/
+
+# Firebase logs
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
