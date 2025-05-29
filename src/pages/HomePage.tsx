@@ -117,7 +117,7 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
 
   return (
     <div className='home-div'>
-      <h1 className='text h1-text orange-text title-text'>Oregon State Purity Test</h1>
+      <h1 className='text h1-text orange-text title-text'>Beaver Purity Test</h1>
       <h2 className='text italic-text subtitle-text h2-text'>Computer Science Edition</h2>
 
       <div className='website-description'>
