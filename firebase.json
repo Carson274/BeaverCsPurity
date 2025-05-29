@@ -19,7 +19,8 @@
     }
   ],
   "hosting": {
-    "public": "build",
+    "site": "osu-cs-purity",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",
