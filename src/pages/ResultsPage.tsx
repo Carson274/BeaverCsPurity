@@ -17,7 +17,7 @@ export default function ResultsPage({ score }: { score: number }) {
 
   return (
     <div className='results-div'>
-      <h1 className='score-title'>Your OSU Purity Score</h1>
+      <h1 className='score-title'>Your Beaver Purity Score</h1>
       <p className='text score-text orange-text bold-text'>{score} / 100</p>
 
       <p className='text p-text'>

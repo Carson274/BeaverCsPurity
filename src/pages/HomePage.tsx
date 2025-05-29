@@ -121,7 +121,7 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
       <h2 className='text italic-text subtitle-text h2-text'>Computer Science Edition</h2>
 
       <div className='website-description'>
-        <p className='text p-text'>The official purity test for the true STEM critters of OSU (Computer Science majors). Click on every item you have done.</p>
+        <p className='text p-text'>The official purity test for the true STEM critters (Computer Science majors). Click on every item you have done.</p>
         <p className='text p-text bold-text'>Caution: This is NOT a bucket list. Completion of all items on this test will make you a critter.</p>
       </div>
 
