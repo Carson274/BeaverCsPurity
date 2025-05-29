@@ -3,16 +3,19 @@ import type { MessageItem } from '../types'
 
 export default function ResultsPage({ score }: { score: number }) {
   const messages: MessageItem[] = [
-    { range: "90-100", text: "You must either be a freshman or have a social life. Congrats! Goodluck finding a j*b though." },
-    { range: "80-89", text: "" },
-    { range: "70-79", text: "" },
-    { range: "60-69", text: "" },
-    { range: "50-59", text: "Uh oh. STEM critter alert! 🚨🤓" },
-    { range: "40-49", text: "" },
-    { range: "30-39", text: "" },
-    { range: "20-29", text: "" },
-    { range: "10-19", text: "" },
-    { range: "0-9", text: "" },
+    { floor: 100, text: "Not a single one? Are you sure you're a CS major?" },
+    { floor: 90, text: "You must either be a freshman or have a social life. Congrats! Goodluck finding a j*b though." },
+    { floor: 80, text: "You're still mostly pure. Still time to fall." },
+    { floor: 70, text: "You've seen some stuff." },
+    { floor: 69, text: "Nice." },
+    { floor: 60, text: "You’ve begun the descent into chaos." },
+    { floor: 50, text: "You’re halfway to morally bankrupt." },
+    { floor: 40, text: "Things are getting concerning." },
+    { floor: 30, text: "Are you okay?" },
+    { floor: 20, text: "Okay teacher's pet." },
+    { floor: 10, text: "If you're this low and still don't have a j*b yet, I'm doomed." },
+    { floor: 1, text: "You are a disgrace to the beaver community." },
+    { floor: 0, text: "Holy critter." },
   ];
 
   return (
@@ -20,9 +23,7 @@ export default function ResultsPage({ score }: { score: number }) {
       <h1 className='score-title'>Your Beaver Purity Score</h1>
       <p className='text score-text orange-text bold-text'>{score} / 100</p>
 
-      <p className='text p-text'>
-        {score === 69 ? "Nice." : messages[score % 10].text}
-      </p>
+      <p className='text p-text'>{messages.find(m => score >= m.floor)?.text}</p>
 
       <div className='result-buttons-div'>
         <a href='/'>

@@ -5,6 +5,6 @@ export interface ChecklistItem {
 }
 
 export interface MessageItem {
-  range: string;
+  floor: number;
   text: string;
 }
