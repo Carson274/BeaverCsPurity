@@ -71,6 +71,17 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
     "Put 'RESTful API' on your resume",
     "Built a personal website",
     "Coded in high school",
+    "Raised your hand in class",
+    "Completed 100+ LeetCode problems",
+    "Grew a beard",
+    "Had the dawgs out in class",
+    "Eaten a whole meal in class",
+    "Solved a LeetCode problem in class",
+    "Used a physical computer science textbook",
+    "Contributed to an open source project",
+    "Had an app idea you thought was unique but already existed",
+    "Authored a research paper",
+    "Programmed in Scratch",
   ]
 
   const [checklist, setChecklist] = useState<ChecklistItem[]>(
