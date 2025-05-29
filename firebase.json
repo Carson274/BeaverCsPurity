@@ -19,7 +19,7 @@
     }
   ],
   "hosting": {
-    "site": "osu-cs-purity",
+    "site": "beaver-cs-purity",
     "public": "dist",
     "ignore": [
       "firebase.json",
