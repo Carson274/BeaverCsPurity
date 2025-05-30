@@ -10,13 +10,11 @@ initialize_app()
 
 @https_fn.on_request()
 def submit_score(req: https_fn.Request) -> https_fn.Response:
-  # Should be just a parameter like "score=100"
-  score = req.args
+  data = req.get_json(silent=True) or {}
+  score_value = data.get("score")
 
-  if not score or len(score) != 1:
-    return https_fn.Response("Invalid request", status_code=400)
-
-  score_value = score.get("score")
+  if score_value is None:
+    return https_fn.Response("Missing score", status=400)
 
   response = {
     "score": score_value,
@@ -24,14 +22,10 @@ def submit_score(req: https_fn.Request) -> https_fn.Response:
 
   # Save the score to Firestore
   db = firestore.client()
+  db.collection("scores").add({
+    "userId": "anonymous",
+    "score": score_value,
+  })
 
-  scores_ref = db.collection("scores")
-  scores_ref.add(
-    {
-      "userId": "anonymous",
-      "score": score_value,
-    }
-  )
-
-  return https_fn.Response("Score submitted successfully")
+  return https_fn.Response("Score submitted successfully", status=200)
 

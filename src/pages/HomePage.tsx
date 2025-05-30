@@ -120,7 +120,8 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
     const score = 100 - checklist.filter(item => item.isChecked).length;
     setScore(score);
 
-    axios.get(`${import.meta.env.VITE_FUNCTION_URL_SUBMIT_SCORE}/score=${score}`)
+    axios
+      .post(import.meta.env.VITE_FUNCTION_URL_SUBMIT_SCORE, { score: 0 })
       .then(response => {
         console.log(response.data);
       })
