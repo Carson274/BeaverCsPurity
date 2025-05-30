@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Checklist from '../components/Checklist'
 import Footer from '../components/Footer'
 import type { ChecklistItem } from '../types';
+import axios from 'axios';
 
 export default function HomePage({ setScore } : { setScore: (score: number) => void }) {
   const items = [
@@ -115,6 +116,19 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
     }))
   );
 
+  const handleSubmit = () => {
+    const score = 100 - checklist.filter(item => item.isChecked).length;
+    setScore(score);
+
+    axios.get(`${import.meta.env.VITE_FUNCTION_URL_SUBMIT_SCORE}/score=${score}`)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   return (
     <div className='home-div'>
       <h1 className='text h1-text orange-text title-text'>Beaver Purity Test</h1>
@@ -131,10 +145,7 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
         <a href='/results'>
           <button 
             className='calculate-button'
-            onClick={() => {
-              const score = checklist.filter(item => item.isChecked).length;
-              setScore(100 - score);
-            }}
+            onClick={handleSubmit}
           >
             Calculate my score.
           </button>
