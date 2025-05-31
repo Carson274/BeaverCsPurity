@@ -104,8 +104,8 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
     "Been on a first name basis with a professor",
     "Worked in a research lab",
     "Authored a research paper",
-    "Rejected an internship or job offer",
-    "Landed a FAANG internship or job",
+    "Rejected an internship or j*b offer",
+    "Landed a FAANG internship or j*b",
   ]
   
   const [checklist, setChecklist] = useState<ChecklistItem[]>(
@@ -117,16 +117,18 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
   );
 
   const handleSubmit = () => {
+    console.log('handleSubmit called!');
     const score = 100 - checklist.filter(item => item.isChecked).length;
+    console.log('Calculated score:', score);
     setScore(score);
-
+  
     axios
-      .post(import.meta.env.VITE_FUNCTION_URL_SUBMIT_SCORE, { score: 0 })
+      .post(import.meta.env.VITE_FUNCTION_URL_SUBMIT_SCORE, { score })
       .then(response => {
-        console.log(response.data);
+        console.log('Success:', response.data);
       })
       .catch(error => {
-        console.error(error);
+        console.error('Error:', error);
       });
   }
 
