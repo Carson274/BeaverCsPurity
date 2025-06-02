@@ -3,6 +3,7 @@ import Checklist from '../components/Checklist'
 import Footer from '../components/Footer'
 import type { ChecklistItem } from '../types';
 import axios from 'axios';
+import { getCurrentBrowserFingerPrint } from '@rajesh896/broprint.js';
 
 export default function HomePage({ setScore } : { setScore: (score: number) => void }) {
   const items = [
@@ -121,15 +122,23 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
     const score = 100 - checklist.filter(item => item.isChecked).length;
     console.log('Calculated score:', score);
     setScore(score);
-  
-    axios
-      .post(import.meta.env.VITE_FUNCTION_URL_SUBMIT_SCORE, { score })
-      .then(response => {
-        console.log('Success:', response.data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+    
+    getCurrentBrowserFingerPrint().then((fingerprint) => {
+      console.log('fingerprint: ', fingerprint);
+
+      axios
+        .post(import.meta.env.VITE_FUNCTION_URL_SUBMIT_SCORE, 
+          { 
+            score, 
+            userId: fingerprint, 
+          })
+        .then(response => {
+          console.log('Success:', response.data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    })
   }
 
   return (

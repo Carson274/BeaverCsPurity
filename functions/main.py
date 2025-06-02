@@ -50,7 +50,7 @@ def submit_score(req: https_fn.Request) -> https_fn.Response:
     # Save the score to Firestore
     db = firestore.client()
     doc_ref = db.collection("scores").add({
-      "userId": "anonymous",
+      "userId": user_id,
       "score": score_value,
     })
 
@@ -58,6 +58,7 @@ def submit_score(req: https_fn.Request) -> https_fn.Response:
     return https_fn.Response(
       json.dumps({
         "message": "Score submitted successfully", 
+        "userId": user_id,
         "score": score_value,
       }),
       status=200,
