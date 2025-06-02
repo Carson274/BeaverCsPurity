@@ -131,7 +131,8 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
         .post(import.meta.env.VITE_FUNCTION_URL_SUBMIT_SCORE, 
           { 
             score: score,
-            userId: fingerprint
+            userId: fingerprint,
+            checklist: checklist,
           }, 
           {
             headers: {
