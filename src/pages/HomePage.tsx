@@ -4,6 +4,7 @@ import Footer from '../components/Footer'
 import type { ChecklistItem } from '../types';
 import axios from 'axios';
 import { getCurrentBrowserFingerPrint } from '@rajesh896/broprint.js';
+import { logger } from '../logger';
 
 export default function HomePage({ setScore } : { setScore: (score: number) => void }) {
   const items = [
@@ -118,25 +119,30 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
   );
 
   const handleSubmit = () => {
-    console.log('handleSubmit called!');
+    logger.log('handleSubmit called!');
     const score = 100 - checklist.filter(item => item.isChecked).length;
-    console.log('Calculated score:', score);
+    logger.log('Score calculated:', score);
     setScore(score);
     
     getCurrentBrowserFingerPrint().then((fingerprint) => {
-      console.log('fingerprint: ', fingerprint);
+      logger.log('Fingerprint:', fingerprint);
 
       axios
         .post(import.meta.env.VITE_FUNCTION_URL_SUBMIT_SCORE, 
           { 
-            score, 
-            userId: fingerprint, 
+            score: score,
+            userId: fingerprint
+          }, 
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
           })
         .then(response => {
-          console.log('Success:', response.data);
+          logger.log('Success:', response.data);
         })
         .catch(error => {
-          console.error('Error:', error);
+          logger.error('Error:', error);
         });
     })
   }
