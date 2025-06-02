@@ -20,6 +20,10 @@ def cors_headers():
 def submit_score(req: https_fn.Request) -> https_fn.Response:
   # Configure CORS
   headers = cors_headers()
+
+  # Handle preflight requests
+  if req.method == 'OPTIONS':
+    return https_fn.Response('', status=204, headers=headers)
     
   # Handle non-POST requests
   if req.method != 'POST':
@@ -33,6 +37,7 @@ def submit_score(req: https_fn.Request) -> https_fn.Response:
     # Grab the data
     data = req.get_json(silent=True) or {}
     score_value = data.get("score")
+    user_id = data.get("userId", "anonymous")
 
     # Validate the score
     if score_value is None:
