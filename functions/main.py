@@ -48,21 +48,15 @@ def submit_score(req: https_fn.Request) -> https_fn.Response:
 
     db = firestore.client()
 
-    # Save user submission to scores - update previously submitted score if exists
-    query = db.collection("scores").where("userId", "==", user_id).limit(1).get()
-
-    if query:
-        # Found existing doc
-        doc_ref = query[0].reference
-    else:
-        # No document found, create a new one
-        doc_ref = db.collection("scores").document()
+    # Create a new document in the "scores" collection
+    doc_ref = db.collection("scores").document()
 
     doc_ref.set({
         "userId": user_id,
         "score": score_value,
-        "checklist": [item.dict() for item in checklist]
-    }, merge=True)
+        "checklist": [item.dict() for item in checklist],
+        "submittedAt": firestore.SERVER_TIMESTAMP
+    })
 
     # Increment global stats — but only if user hasn't already voted for that item
     for item in checklist:
