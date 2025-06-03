@@ -19,7 +19,7 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
     "Been denied an extension",
     "Cried over an assignment/exam",
     "Sacrificed one course's exam to study for another's",
-    "Dropped out of the honors college",
+    "Joined an didn't drop out of the Honors College",
     "Used ChatGPT on an assignment",
     "Spent money on an LLM",
     "Went 2 days in a row without showering",
