@@ -8,7 +8,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   padding: 2rem;
 }
 
@@ -167,7 +166,6 @@
   justify-content: flex-start;
   text-align: center;
   max-width: 30rem;
-  height: 100vh;
   padding: 2rem;
 }
 
