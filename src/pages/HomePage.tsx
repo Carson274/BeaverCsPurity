@@ -108,7 +108,7 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
     "Caused a massive merge conflict",
     "Had a GitHub commit streak of 100+ days",
     "Made a computer science reference IRL",
-    "Still uses MobaXterm"
+    "Still uses MobaXterm",
     "Lost hours of work because you forgot to push",
     "Forget how to exit Vim",
     "Pushed an API key to GitHub",
