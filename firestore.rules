@@ -19,6 +19,16 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    match /question_votes/{questionId}/voters/{voterId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /question_stats/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
     // Default: deny everything else
     match /{document=**} {
       allow read, write: if false;

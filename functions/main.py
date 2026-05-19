@@ -10,21 +10,27 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-ALLOWED_ORIGIN = os.environ.get("ALLOWED_ORIGIN")
+ALLOWED_ORIGINS = {
+  origin.strip()
+  for origin in (os.environ.get("ALLOWED_ORIGIN", "")).split(",")
+  if origin.strip()
+}
 
 initialize_app()
 
-def cors_headers():
+def cors_headers(request_origin: str | None):
+  allow_origin = request_origin if request_origin in ALLOWED_ORIGINS else next(iter(ALLOWED_ORIGINS), "")
   return {
-    'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Origin': allow_origin,
+    'Vary': 'Origin',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Content-Type': 'application/json'
   }
 
 @https_fn.on_request()
 def submit_score(req: https_fn.Request) -> https_fn.Response:
-  headers = cors_headers()
+  headers = cors_headers(req.headers.get('Origin'))
 
   if req.method == 'OPTIONS':
     return https_fn.Response('', status=204, headers=headers)
@@ -58,23 +64,21 @@ def submit_score(req: https_fn.Request) -> https_fn.Response:
         "submittedAt": firestore.SERVER_TIMESTAMP
     })
 
-    # Increment global stats — but only if user hasn't already voted for that item
+    stats_ref = db.collection("question_stats").document("global")
+
     for item in checklist:
-      vote_doc_ref = db.collection("checklist_votes").document(f"item_{item.id}").collection("voters").document(user_id)
+      question_key = f"Q{item.id + 1}"
+      vote_doc_ref = db.collection("question_votes").document(question_key).collection("voters").document(user_id)
       vote_snapshot = vote_doc_ref.get()
 
       if item.isChecked:
         if not vote_snapshot.exists:
-          # User newly checked → increment and record
           vote_doc_ref.set({})
-          stats_ref = db.collection("checklist_stats").document("global")
-          stats_ref.set({str(item.id): firestore.Increment(1)}, merge=True)
+          stats_ref.set({question_key: firestore.Increment(1)}, merge=True)
       else:
         if vote_snapshot.exists:
-          # User previously checked but now unchecked → decrement and remove vote
           vote_doc_ref.delete()
-          stats_ref = db.collection("checklist_stats").document("global")
-          stats_ref.set({str(item.id): firestore.Increment(-1)}, merge=True)
+          stats_ref.set({question_key: firestore.Increment(-1)}, merge=True)
 
     return https_fn.Response(json.dumps({
       "message": "Score submitted successfully",
@@ -82,5 +86,24 @@ def submit_score(req: https_fn.Request) -> https_fn.Response:
       "score": score_value
     }), status=200, headers=headers)
 
+  except Exception as e:
+    return https_fn.Response(json.dumps({"error": str(e)}), status=500, headers=headers)
+
+
+@https_fn.on_request()
+def get_stats(req: https_fn.Request) -> https_fn.Response:
+  headers = cors_headers(req.headers.get('Origin'))
+
+  if req.method == 'OPTIONS':
+    return https_fn.Response('', status=204, headers=headers)
+
+  if req.method != 'GET':
+    return https_fn.Response(json.dumps({"error": "Method not allowed"}), status=405, headers=headers)
+
+  try:
+    db = firestore.client()
+    snapshot = db.collection("question_stats").document("global").get()
+    stats = snapshot.to_dict() if snapshot.exists else {}
+    return https_fn.Response(json.dumps({"stats": stats}), status=200, headers=headers)
   except Exception as e:
     return https_fn.Response(json.dumps({"error": str(e)}), status=500, headers=headers)

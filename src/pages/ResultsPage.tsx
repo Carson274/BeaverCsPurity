@@ -1,4 +1,8 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import Footer from '../components/Footer'
+import { items } from '../data/items';
+import { logger } from '../logger';
 import type { MessageItem } from '../types'
 
 export default function ResultsPage({ score }: { score: number }) {
@@ -13,6 +17,28 @@ export default function ResultsPage({ score }: { score: number }) {
     { floor: 5, text: "If you're this low and still don't have a j*b yet, I'm doomed." },
     { floor: 0, text: "Holy critter." },
   ];
+
+  const [stats, setStats] = useState<Record<string, number> | null>(null);
+  const [statsError, setStatsError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const url = import.meta.env.VITE_FUNCTION_URL_GET_STATS;
+    if (!url) {
+      setStatsError('Stats endpoint not configured.');
+      return;
+    }
+    axios
+      .get(url)
+      .then((res) => setStats((res.data?.stats ?? {}) as Record<string, number>))
+      .catch((err) => {
+        logger.error('Failed to load stats:', err);
+        setStatsError('Could not load stats.');
+      });
+  }, []);
+
+  const maxCount = stats
+    ? Math.max(1, ...Object.values(stats))
+    : 1;
 
   return (
     <div className='results-div'>
@@ -30,6 +56,37 @@ export default function ResultsPage({ score }: { score: number }) {
           </button>
         </a>
       </div>
+
+      <details className='stats-details'>
+        <summary className='stats-summary'>See how others scored each question</summary>
+        <div className='stats-bars'>
+          {stats === null && !statsError && (
+            <p className='text p-text stats-status'>Loading…</p>
+          )}
+          {statsError && (
+            <p className='text p-text stats-status'>{statsError}</p>
+          )}
+          {stats && items.map((text, idx) => {
+            const key = `Q${idx + 1}`;
+            const count = stats[key] ?? 0;
+            const pct = (count / maxCount) * 100;
+            return (
+              <div key={key} className='stats-row'>
+                <div className='stats-row-header'>
+                  <span
+                    className='stats-label'
+                    dangerouslySetInnerHTML={{ __html: `${idx + 1}. ${text}` }}
+                  />
+                  <span className='stats-count'>{count}</span>
+                </div>
+                <div className='stats-bar-track'>
+                  <div className='stats-bar-fill' style={{ width: `${pct}%` }} />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </details>
 
       <Footer/>
     </div>
