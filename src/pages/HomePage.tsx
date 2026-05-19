@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Checklist from '../components/Checklist'
 import Footer from '../components/Footer'
+import SectionNav from '../components/SectionNav'
 import type { ChecklistItem } from '../types';
 import axios from 'axios';
 import { getCurrentBrowserFingerPrint } from '@rajesh896/broprint.js';
@@ -72,6 +73,8 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
     <div className='home-div'>
       <h1 className='text h1-text orange-text title-text'>Beaver Purity Test</h1>
       <h2 className='text italic-text subtitle-text h2-text'>Computer Science Edition</h2>
+
+      <SectionNav />
 
       <div className='website-description'>
         <p className='text p-text'>

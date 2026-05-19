@@ -175,6 +175,90 @@
 /* ------------------ */
 
 /* Checklist.tsx-exclusive */
+.section-heading {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #D73F09;
+  margin: 1.75rem 0 0.75rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid #D9D5CC;
+  scroll-margin-top: 1rem;
+}
+
+.section-heading:first-child {
+  margin-top: 0;
+}
+
+.section-nav {
+  position: fixed;
+  top: 50%;
+  right: 1.5rem;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 5;
+  padding: 0.75rem 0.6rem;
+  background: rgba(255, 253, 248, 0.85);
+  backdrop-filter: blur(4px);
+  border: 1px solid #D9D5CC;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.section-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #555;
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: 4px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.section-nav-item:hover {
+  color: #D73F09;
+  background: rgba(215, 63, 9, 0.08);
+}
+
+.section-nav-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  border: 1px solid #D9D5CC;
+  background: #FFFDF8;
+  font-size: 0.72rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.section-nav-label {
+  white-space: nowrap;
+}
+
+.section-nav-active {
+  color: #D73F09;
+  font-weight: 600;
+}
+
+.section-nav-active .section-nav-num {
+  background: #D73F09;
+  border-color: #D73F09;
+  color: white;
+}
+
+@media (max-width: 1100px) {
+  .section-nav {
+    display: none;
+  }
+}
+
 .checklist-item {
   display: flex;
   align-items: flex-start;
