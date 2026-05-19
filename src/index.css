@@ -16,3 +16,12 @@
 a {
   text-decoration: none;
 }
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
