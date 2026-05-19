@@ -64,7 +64,7 @@ export const items: string[] = [
   "'sudo rm -rf'd something you weren't supposed to",
   "Fork bombed the OS1 or flip server",
   "Used an API without rate limiting and <i>literally</i> paid the price",
-  "Replied to a Stack Overflow question (RIP)",
+  "Made or commented on a CS-related Reddit post",
   "Had an app idea you thought was unique but already existed",
   "Overengineered a project",
   "Put 'REST' or 'RESTful API' on your resume",
