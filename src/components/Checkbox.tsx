@@ -1,21 +1,11 @@
-import { useState } from 'react';
 import { GoCheck } from "react-icons/go";
 
-export default function Checkbox({ checkedState, onChange }: { checkedState: boolean; onChange: (isChecked: boolean) => void; }) {
-  const [isChecked, setIsChecked] = useState(checkedState);
-
-  const handleClick = () => {
-    const newCheckedState = !isChecked;
-    setIsChecked(newCheckedState);
-    onChange(newCheckedState); // Call the onChange callback
-  };
-
+export default function Checkbox({ checkedState }: { checkedState: boolean; }) {
   return (
-    <div 
-      onClick={handleClick}
-      className={isChecked ? 'checkbox-checked' : 'checkbox-unchecked'}
+    <div
+      className={checkedState ? 'checkbox-checked' : 'checkbox-unchecked'}
     >
-      {isChecked && (
+      {checkedState && (
         <GoCheck color='white' />
       )}
     </div>
