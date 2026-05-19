@@ -199,7 +199,16 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
                   critter, though Computer Science remains dominant (an estimated 90%).
                 </span>
                 <span className='definition-origin'>
-                  <span className='definition-italic'>Origin:</span> coined by Carson Secrest, circa 2022.
+                  <span className='definition-italic'>Origin:</span> coined by{' '}
+                  <a
+                    href='https://www.linkedin.com/in/carson-secrest'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='text-link'
+                  >
+                    Carson Secrest
+                  </a>
+                  , circa 2022.
                 </span>
               </span>
             )}
