@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { sections } from '../data/items';
 
 export default function SectionNav() {
   const [active, setActive] = useState<string>(sections[0]?.anchorId ?? '');
+  const suppressObserverRef = useRef(false);
+  const suppressTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
+        if (suppressObserverRef.current) return;
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActive(entry.target.id);
@@ -21,15 +24,30 @@ export default function SectionNav() {
       if (el) observer.observe(el);
     });
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (suppressTimeoutRef.current !== null) {
+        window.clearTimeout(suppressTimeoutRef.current);
+      }
+    };
   }, []);
 
   const handleClick = (anchorId: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const el = document.getElementById(anchorId);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!el) return;
+
+    setActive(anchorId);
+    suppressObserverRef.current = true;
+    if (suppressTimeoutRef.current !== null) {
+      window.clearTimeout(suppressTimeoutRef.current);
     }
+    suppressTimeoutRef.current = window.setTimeout(() => {
+      suppressObserverRef.current = false;
+      suppressTimeoutRef.current = null;
+    }, 900);
+
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
