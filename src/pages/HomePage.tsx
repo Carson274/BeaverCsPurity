@@ -97,7 +97,7 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
                 </span>
                 <span className='definition-body'>
                   A student exhibiting peculiar "critter"-like academic habits. These include haunting Kelley Engineering Center past midnight, 
-                  showering once per week, and wearing sandals withouth socks in class. Any major can be a
+                  showering once per week, and wearing sandals without socks in class. Any major can be a
                   critter, though Computer Science remains dominant (an estimated 90%).
                 </span>
                 <span className='definition-origin'>
