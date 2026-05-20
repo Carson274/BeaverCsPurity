@@ -22,6 +22,18 @@ export default function ResultsPage({ score }: { score: number }) {
   const [stats, setStats] = useState<Record<string, number> | null>(null);
   const [statsError, setStatsError] = useState<string | null>(null);
 
+  const [pendingSubmission] = useState<number[]>(() => {
+    try {
+      const raw = localStorage.getItem('beaverPuritySubmission');
+      if (raw) {
+        localStorage.removeItem('beaverPuritySubmission');
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      }
+    } catch { /* ignore */ }
+    return [];
+  });
+
   const [explainOpen, setExplainOpen] = useState(false);
   const explainWrapRef = useRef<HTMLSpanElement>(null);
 
@@ -58,8 +70,16 @@ export default function ResultsPage({ score }: { score: number }) {
       });
   }, []);
 
-  const maxCount = stats
-    ? Math.max(1, ...Object.values(stats))
+  const displayStats = stats
+    ? items.reduce<Record<string, number>>((acc, _, idx) => {
+        const key = `Q${idx + 1}`;
+        acc[key] = (stats[key] ?? 0) + (pendingSubmission.includes(idx) ? 1 : 0);
+        return acc;
+      }, {})
+    : null;
+
+  const maxCount = displayStats
+    ? Math.max(1, ...Object.values(displayStats))
     : 1;
 
   return (
@@ -109,9 +129,9 @@ export default function ResultsPage({ score }: { score: number }) {
           {statsError && (
             <p className='text p-text stats-status'>{statsError}</p>
           )}
-          {stats && items.map((text, idx) => {
+          {displayStats && items.map((text, idx) => {
             const key = `Q${idx + 1}`;
-            const count = stats[key] ?? 0;
+            const count = displayStats[key] ?? 0;
             const pct = (count / maxCount) * 100;
             return (
               <div key={key} className='stats-row'>

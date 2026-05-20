@@ -24,6 +24,9 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
     const score = 100 - checklist.filter(item => item.isChecked).length;
     logger.log('Score calculated:', score);
     setScore(score);
+
+    const checkedIds = checklist.filter(item => item.isChecked).map(item => item.id);
+    localStorage.setItem('beaverPuritySubmission', JSON.stringify(checkedIds));
     
     getCurrentBrowserFingerPrint().then((fingerprint) => {
       logger.log('Fingerprint:', fingerprint);
