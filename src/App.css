@@ -394,12 +394,47 @@
 }
 
 .score-title {
-  font-size: 24px;
+  font-size: 30px;
   margin-bottom: 0.5rem;
 }
 
+.score-title-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 0.5rem;
+}
+
+.score-title-row .score-title {
+  margin-bottom: 0;
+}
+
+.score-explain-trigger {
+  font-size: 0.85rem;
+  font-style: italic;
+  font-weight: 400;
+  color: #666;
+  text-decoration: none;
+}
+
+.score-explain-trigger:hover {
+  color: #D73F09;
+}
+
+.score-explain-popover {
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.95rem;
+}
+
+.score-explain-popover::before {
+  left: 50%;
+  margin-left: -6px;
+}
+
 .score-text {
-  font-size: 40px;
+  font-size: 48px;
   margin-bottom: 1rem;
 }
 
@@ -540,11 +575,11 @@
   }
 
   .score-text {
-    font-size: 32px;
+    font-size: 38px;
   }
 
   .score-title {
-    font-size: 20px;
+    font-size: 24px;
   }
 }
 

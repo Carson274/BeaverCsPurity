@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Footer from '../components/Footer'
+import CritterDefinition from '../components/CritterDefinition'
 import { items } from '../data/items';
 import { logger } from '../logger';
 import type { MessageItem } from '../types'
@@ -20,6 +21,27 @@ export default function ResultsPage({ score }: { score: number }) {
 
   const [stats, setStats] = useState<Record<string, number> | null>(null);
   const [statsError, setStatsError] = useState<string | null>(null);
+
+  const [explainOpen, setExplainOpen] = useState(false);
+  const explainWrapRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (!explainOpen) return;
+    const onDocClick = (e: MouseEvent) => {
+      if (explainWrapRef.current && !explainWrapRef.current.contains(e.target as Node)) {
+        setExplainOpen(false);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setExplainOpen(false);
+    };
+    document.addEventListener('mousedown', onDocClick);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDocClick);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [explainOpen]);
 
   useEffect(() => {
     const url = import.meta.env.VITE_FUNCTION_URL_GET_STATS;
@@ -42,7 +64,28 @@ export default function ResultsPage({ score }: { score: number }) {
 
   return (
     <div className='results-div'>
-      <h1 className='score-title'>Your Beaver Purity Score</h1>
+      <div className='score-title-row'>
+        <h1 className='score-title'>Your Beaver Purity Score</h1>
+        <span className='critter-wrapper score-explain-wrapper' ref={explainWrapRef}>
+          <button
+            type='button'
+            className='critter-trigger score-explain-trigger'
+            onClick={() => setExplainOpen((o) => !o)}
+            aria-expanded={explainOpen}
+          >
+            (what does this mean?)
+          </button>
+          {explainOpen && (
+            <span className='definition-popover score-explain-popover' role='dialog'>
+              <span className='definition-body'>
+                Your score is <strong>100 minus the number of items you checked</strong>, so it reflects how{' '}
+                <em>pure</em> you are, not how many boxed you checked off. A higher number means
+                you've kept your purity intact. The lower it goes, the more of a <CritterDefinition label='critter' /> you are.
+              </span>
+            </span>
+          )}
+        </span>
+      </div>
       <p className='text score-text orange-text bold-text'>{score} / 100</p>
 
       <p className='text p-text'>{messages.find(m => score >= m.floor)?.text}</p>
