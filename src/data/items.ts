@@ -4,7 +4,7 @@ export const items: string[] = [
   "Considered switching majors",
   "Used Latex or Markdown for class notes",
   "Submitted the wrong assignment document",
-  "Used Jake's Resume template (or Peter's new <a href='https://formacv.org/' target='_blank' rel='noopener noreferrer' class='text-link'>resume builder</a>)",
+  "Used Jake's Resume template (or Peter's <a href='https://formacv.org/' target='_blank' rel='noopener noreferrer' class='text-link'>resume builder</a>)",
   "Stuttered while talking to someone",
   "Sat in the front row of a class",
   "Raised your hand in class",
