@@ -34,6 +34,18 @@ export default function ResultsPage({ score }: { score: number }) {
     return [];
   });
 
+  // The user's own checked answers, kept across refreshes to mark their rows.
+  const [myChecked] = useState<number[]>(() => {
+    try {
+      const raw = localStorage.getItem('beaverPurityChecked');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      }
+    } catch { /* ignore */ }
+    return [];
+  });
+
   const [explainOpen, setExplainOpen] = useState(false);
   const explainWrapRef = useRef<HTMLSpanElement>(null);
 
@@ -160,6 +172,13 @@ export default function ResultsPage({ score }: { score: number }) {
             const pct = (count / maxCount) * 100;
             return (
               <div key={key} className='stats-row'>
+                {myChecked.includes(idx) && (
+                  <span
+                    className='stats-mine-dot'
+                    title='You checked this one'
+                    aria-label='You checked this one'
+                  />
+                )}
                 <div className='stats-row-header'>
                   <span
                     className='stats-label'

@@ -27,6 +27,8 @@ export default function HomePage({ setScore } : { setScore: (score: number) => v
 
     const checkedIds = checklist.filter(item => item.isChecked).map(item => item.id);
     localStorage.setItem('beaverPuritySubmission', JSON.stringify(checkedIds));
+    // Persistent copy used to mark the user's own answers in the stats section.
+    localStorage.setItem('beaverPurityChecked', JSON.stringify(checkedIds));
     
     getCurrentBrowserFingerPrint().then((fingerprint) => {
       logger.log('Fingerprint:', fingerprint);
