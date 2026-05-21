@@ -28,7 +28,7 @@ def cors_headers(request_origin: str | None):
     'Content-Type': 'application/json'
   }
 
-@https_fn.on_request()
+@https_fn.on_request(max_instances=10)
 def submit_score(req: https_fn.Request) -> https_fn.Response:
   headers = cors_headers(req.headers.get('Origin'))
 
@@ -90,7 +90,7 @@ def submit_score(req: https_fn.Request) -> https_fn.Response:
     return https_fn.Response(json.dumps({"error": str(e)}), status=500, headers=headers)
 
 
-@https_fn.on_request()
+@https_fn.on_request(max_instances=10)
 def get_stats(req: https_fn.Request) -> https_fn.Response:
   headers = cors_headers(req.headers.get('Origin'))
 

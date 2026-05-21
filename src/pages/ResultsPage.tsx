@@ -61,14 +61,39 @@ export default function ResultsPage({ score }: { score: number }) {
       setStatsError('Stats endpoint not configured.');
       return;
     }
+
+    const CACHE_KEY = 'beaverPurityStatsCache';
+    const TTL_MS = 5 * 60 * 1000;
+    // A fresh submission means cached stats are out of date — skip the cache.
+    const justSubmitted = pendingSubmission.length > 0;
+
+    if (!justSubmitted) {
+      try {
+        const raw = localStorage.getItem(CACHE_KEY);
+        if (raw) {
+          const cached = JSON.parse(raw) as { stats: Record<string, number>; fetchedAt: number };
+          if (cached && Date.now() - cached.fetchedAt < TTL_MS) {
+            setStats(cached.stats);
+            return;
+          }
+        }
+      } catch { /* ignore malformed cache */ }
+    }
+
     axios
       .get(url)
-      .then((res) => setStats((res.data?.stats ?? {}) as Record<string, number>))
+      .then((res) => {
+        const fetched = (res.data?.stats ?? {}) as Record<string, number>;
+        setStats(fetched);
+        try {
+          localStorage.setItem(CACHE_KEY, JSON.stringify({ stats: fetched, fetchedAt: Date.now() }));
+        } catch { /* ignore storage failures */ }
+      })
       .catch((err) => {
         logger.error('Failed to load stats:', err);
         setStatsError('Could not load stats.');
       });
-  }, []);
+  }, [pendingSubmission]);
 
   const displayStats = stats
     ? items.reduce<Record<string, number>>((acc, _, idx) => {
