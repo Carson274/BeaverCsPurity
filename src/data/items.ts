@@ -27,7 +27,7 @@ export const items: string[] = [
   "Went 2 days in a row without showering",
   "Went 3+ days in a row without showering",
   "Grew a beard",
-  "Had to get glasses mid-degree",
+  "Wore the same pair of underwear 2+ days in a row",
   "Owned an RGB keyboard",
   "Built a PC",
   "Made a computer science reference IRL",
