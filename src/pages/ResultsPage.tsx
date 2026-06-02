@@ -136,7 +136,7 @@ export default function ResultsPage({ score }: { score: number }) {
             <span className='definition-popover score-explain-popover' role='dialog'>
               <span className='definition-body'>
                 Your score is <strong>100 minus the number of items you checked</strong>, so it reflects how{' '}
-                <em>pure</em> you are, not how many boxed you checked off. A higher number means
+                <em>pure</em> you are, not how many boxes you checked off. A higher number means
                 you've kept your purity intact. The lower it goes, the more of a <CritterDefinition label='critter' /> you are.
               </span>
             </span>
